@@ -13,6 +13,6 @@ with label concatenation and multiplication of probabilities as operation and ("
 I've observed that this measurement can be implemented as a State[S,A] Monad, where type S is a List of states and type A is a PMF, as
 described above. The only conceptual thing needed to achieve this is to implement a corresponding Kleisli arrow for particular operator
 being measured. Here, this is done also using typeclass pattern, so one is not confined to representation (type) of operator and state, and
-can use different libraries with different types for that.
+can use different libraries with different types for that. State Monad implementation was copied from the Red Book, not to use any libraries.
 
 I'll add more comperehensive document about this and some real implementations using Scotty(https://www.entangled.xyz/scotty/) later.
