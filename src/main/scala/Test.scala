@@ -1,14 +1,16 @@
-import operator.PauliZ
-import pmf.PMF
-import state.State
-import state.QuantumStateMonad.operatorToKleisliArrow
+import operator.{OperatorMeasurement, PauliZ}
+import scotty.quantum.Qubit
+import state.QuantumStateMonad.{measure, measureState}
 
-object Test extends App{
+object Test extends App {
 
-  implicit val trivialZ = operator.TrivialAlwaysEvenPauliZ
+  implicit val trivialZ: OperatorMeasurement[PauliZ, String]  = operator.TrivialAlwaysEvenPauliZ
+  implicit val scottyZ: OperatorMeasurement[PauliZ, Qubit] = operator.ScottyQubitPauliZ
 
-  val measureTwice = State.unit[List[String], PMF](PMF(("", 1.0))).flatMap(operatorToKleisliArrow[PauliZ, String]).flatMap(operatorToKleisliArrow[PauliZ, String])
-  val resultTwice = measureTwice.run(List("|0in>"))
-  println(resultTwice)
+  //Measure |x> state in Z twice using Scotty library
+  println(measureState(Qubit.fiftyFifty)(measure[PauliZ, Qubit], measure[PauliZ, Qubit]))
+
+  //Trivial measurement of Z, always fair
+  println(measureState("|in>")(measure[PauliZ, String], measure[PauliZ, String]))
 
 }

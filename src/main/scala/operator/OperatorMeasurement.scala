@@ -9,6 +9,7 @@ trait OperatorMeasurement[O <: Operator, T] {
 }
 
 object OperatorMeasurement{
+
   def apply[O <: Operator,T](inState: T)(implicit om: OperatorMeasurement[O,T]): (PMF, List[T]) =
     om.measure(inState)
 }
